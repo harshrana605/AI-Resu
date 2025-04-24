@@ -158,7 +158,7 @@ function ExperienceForm() {
     };
     const handleChange = (id, e) => { updateListItem('experience', id, { [e.target.name]: e.target.value }); };
     const handleGenerateAI = async (id) => {
-        // ... (API call logic) ...
+        //  (API call logic) 
          if (!API_BASE_URL) { setError("API URL not configured in frontend .env file (VITE_API_BASE_URL)."); return; }
         const item = experience.find(i => i && i.id === id);
         if (!item || !item.summary || !item.summary.trim()) { setError("Please write some initial bullet points or description before using AI enhance."); return; }
@@ -778,10 +778,10 @@ function ResumeBuilder() {
   
   return (
     <div className={styles.builderLayout}>
-      {/* Form Panel (Scrollable) */}
+      
       <div className={styles.formPanel} ref={formPanelRef}>
         <div className={styles.formContainer}>
-          {/* Top Controls Area */}
+          
           <div className={styles.topControls}>
              <div className={styles.topControlsLeft}>
                  <button onClick={() => navigate('/dashboard')} className={styles.iconButton} title="Back to Dashboard" type="button"> <DashboardIcon /> <span className="sr-only">Dashboard</span> </button>

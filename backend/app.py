@@ -4,43 +4,32 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from dotenv import load_dotenv
 import json
-import re # For cleaning potential markdown
+import re 
 
-# Load environment variables from .env file
 load_dotenv()
 
 app = Flask(__name__)
-# Allow requests from your frontend development server
-# IMPORTANT: Adjust the origin URL(s) if your frontend runs on a different port or domain
 CORS(app, resources={r"/api/*": {"origins": ["http://localhost:5173", "http://127.0.0.1:5173"]}})
 
-# Configure the Gemini API client
+
 api_key = os.getenv("GEMINI_API_KEY")
 if not api_key:
     raise ValueError("GEMINI_API_KEY not found in environment variables.")
 
 genai.configure(api_key=api_key)
-# Use a model suitable for text generation (check latest Gemini models)
-# gemini-1.5-flash is generally faster and cheaper for many tasks
-# gemini-pro might offer slightly higher quality for complex prompts
 model = genai.GenerativeModel('gemini-1.5-flash')
 
-# --- Helper function to clean and parse Gemini JSON output ---
 def parse_gemini_json(gemini_text):
     """Attempts to parse JSON from Gemini response, handling potential markdown."""
     if not gemini_text:
         print("Warning: Received empty text from Gemini.")
         return None
-    # Remove potential markdown code fences ```json ... ```
+    
     cleaned_text = re.sub(r'^```json\s*', '', gemini_text, flags=re.IGNORECASE | re.MULTILINE)
     cleaned_text = re.sub(r'\s*```$', '', cleaned_text)
     cleaned_text = cleaned_text.strip()
 
-    # Handle potential escape sequences within the string that Python's json.loads might misinterpret
-    # This is a common issue when the AI includes literal newlines (\n) within the JSON string values
-    # We'll replace literal '\n' with actual newline characters if they are not properly escaped (\\n)
-    # This is a simplified approach; more robust parsing might be needed for complex cases
-    # cleaned_text = cleaned_text.replace('\\n', '\n') # Be cautious with this, might break intended escaped newlines
+    
 
     try:
         return json.loads(cleaned_text)
@@ -49,16 +38,8 @@ def parse_gemini_json(gemini_text):
         print(f"--- Problematic Text Start ---")
         print(repr(cleaned_text)) # Use repr to see escape characters
         print(f"--- Problematic Text End ---")
-        # Attempt a more lenient parse if standard fails (e.g., removing trailing commas)
-        # Note: This is generally not recommended for production but can help during debugging
-        # cleaned_text_fixed = re.sub(r',\s*([}\]])', r'\1', cleaned_text) # Remove trailing commas before } or ]
-        # try:
-        #     print("Attempting lenient JSON parse...")
-        #     return json.loads(cleaned_text_fixed)
-        # except json.JSONDecodeError:
-        #     print("Lenient JSON parse also failed.")
-        #     return None # Return None if parsing fails
-        return None # Return None if parsing fails
+        
+        return None 
 
 # --- API Routes ---
 
@@ -78,10 +59,9 @@ def generate_summary_route():
 
     if not job_title:
         print("Warning: Generating summary without job title context.")
-        # Consider returning an error or using a default if job title is essential
-        # return jsonify({"error": "Job title is required for summary generation"}), 400
+        
 
-    # Construct the prompt for the Gemini model
+    
     prompt = f"""
     You are an expert resume writing assistant.
     Your task is to refine a resume summary and generate suggestions based on the provided draft and target job title.
@@ -144,18 +124,16 @@ def generate_summary_route():
              elif not isinstance(result_json['suggestions'], list) or len(result_json['suggestions']) != 2:
                  error_detail = "AI response 'suggestions' field is not a list of two items."
 
-             # Return the raw text only if parsing completely failed but text exists
+             
              if raw_response_text and not result_json:
                  return jsonify({"error": error_detail, "raw_ai_response": raw_response_text[:1000]}), 500 # Limit raw response size
-             # Otherwise, report the structure error
+             
              return jsonify({"error": error_detail, "received_structure": result_json}), 500
 
     except Exception as e:
-        # Catch potential errors during the API call or processing
+        
         print(f"Error calling Gemini API or processing response for summary: {e}")
-        # Log the full exception details for server-side debugging
-        # import traceback
-        # traceback.print_exc()
+        
         return jsonify({"error": f"An unexpected error occurred while generating the summary: {str(e)}"}), 500
 
 
@@ -204,7 +182,7 @@ def enhance_experience_route():
     """
     try:
         print(f"--- Sending Prompt to Gemini (Experience) ---")
-        # print(prompt) # Can be very long, maybe log selectively
+        
         print(f"--- End Prompt ---")
 
         # Call the Gemini API
@@ -225,16 +203,15 @@ def enhance_experience_route():
             # Basic check to ensure it looks like bullet points were attempted
             if '•' in enhanced_summary or enhanced_summary.strip() == "": # Allow empty if AI couldn't generate
                  print("Successfully parsed Gemini response for experience.")
-                 # Ensure consistent newline formatting if needed (replace literal '\n' if AI used them)
-                 # result_json['enhancedSummary'] = result_json['enhancedSummary'].replace('\\n', '\n')
+                 
                  return jsonify(result_json), 200
             else:
-                # Fallback if Gemini didn't use bullets but gave text
+                
                 print("Warning: Gemini response for experience didn't contain bullet points as expected, attempting to format.")
-                # Try to format it into bullets: split by newline, filter empty, prepend bullet
+                
                 lines = [line.strip() for line in enhanced_summary.split('\n') if line.strip()]
                 formatted_summary = "\n".join([f"• {line}" for line in lines])
-                # If formatting resulted in empty string, return original non-bulleted text
+                
                 if not formatted_summary and enhanced_summary:
                     print("Warning: Formatting attempt resulted in empty string, returning original non-bulleted text.")
                     return jsonify({"enhancedSummary": enhanced_summary}), 200
@@ -276,7 +253,7 @@ def enhance_project_route():
     if not original_description:
         return jsonify({"error": "No project description provided"}), 400
 
-    # Format tech stack for the prompt (assuming it might be a list or string)
+    
     tech_str = tech
     if isinstance(tech, list):
         tech_str = ", ".join(tech)
@@ -377,7 +354,7 @@ def suggest_skills_route():
     if not job_title:
         return jsonify({"error": "Job title is required to suggest relevant skills"}), 400
 
-    # Ensure existing_skills is a list of strings
+    
     if not isinstance(existing_skills, list) or not all(isinstance(s, str) for s in existing_skills):
          print("Warning: 'skills' field received is not a list of strings. Treating as empty.")
          existing_skills = []
@@ -431,9 +408,9 @@ def suggest_skills_route():
            'suggestedSkills' in result_json and isinstance(result_json['suggestedSkills'], list) and \
            all(isinstance(s, str) for s in result_json['suggestedSkills']):
             print("Successfully parsed Gemini response for skill suggestions.")
-            # Filter out any suggestions already present in the user's list (case-insensitive) - redundancy for safety
+            
             existing_lower = {skill.lower().strip() for skill in existing_skills}
-            # Ensure suggestions are stripped and non-empty before comparison
+            
             filtered_suggestions = [
                 s.strip() for s in result_json['suggestedSkills']
                 if s.strip() and s.strip().lower() not in existing_lower
@@ -473,12 +450,10 @@ def review_section_route():
     section_text = data.get('text', '')
 
     if not section_text:
-        # It might be valid to review an empty section (e.g., to suggest adding content)
-        # For now, we'll return an empty suggestion list for empty text.
+        
         print(f"Review requested for empty section '{section_name}'. Returning no suggestions.")
         return jsonify({"suggestions": []}), 200
-        # Alternatively, return an error:
-        # return jsonify({"error": "No text provided for review"}), 400
+        
 
     # Construct the prompt for the Gemini model
     prompt = f"""
@@ -570,8 +545,7 @@ def review_section_route():
 
     except Exception as e:
         print(f"Error calling Gemini API or processing response for review ({section_name}): {e}")
-        # import traceback
-        # traceback.print_exc()
+        
         return jsonify({"error": f"An unexpected error occurred during section review: {str(e)}"}), 500
 
 
