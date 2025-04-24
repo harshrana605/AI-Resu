@@ -1,0 +1,32 @@
+/* src/components/Header.module.css */
+.header {
+    background-color: var(--background-card); /* Darker background for header */
+    box-shadow: var(--shadow); /* Subtle shadow */
+    padding: var(--spacing-3) var(--spacing-4); /* Adjust padding */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    border-bottom: 1px solid var(--border-color); /* Subtle bottom border */
+  }
+  
+  .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary-color); /* Use primary color for logo */
+    text-decoration: none;
+  }
+  .logo:hover {
+      text-decoration: none;
+      opacity: 0.9;
+  }
+  
+  /* Use global primary button style */
+  .navButton {
+    /* Inherits from global button.primary */
+    /* Add specific overrides if needed */
+    padding: var(--spacing-2) var(--spacing-3); /* Slightly smaller */
+    font-size: 0.9rem;
+  }

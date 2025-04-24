@@ -1,0 +1,258 @@
+/* src/components/ResumePreview.module.css */
+
+.previewContainer {
+    background-color: var(--white);
+    height: 100%;
+    overflow-y: auto;
+    font-size: 10.5pt; /* Slightly smaller base */
+    color: black;
+    line-height: 1.45; /* Slightly more line spacing */
+    border-radius: 0;
+    font-family: 'Georgia', 'Times New Roman', Times, serif;
+}
+
+.actualResumeContent {
+    padding: 1.5cm 2cm; /* Top/Bottom, Left/Right margins */
+    max-width: 21cm;
+    margin: 0 auto;
+}
+
+/* --- Header --- */
+.header {
+    text-align: center;
+    margin-bottom: var(--spacing-4); /* Reduced bottom margin */
+    padding-bottom: var(--spacing-2);
+    border-bottom: 1.5px solid #ccc;
+}
+
+.name {
+    font-size: 1.9rem; /* Larger Name */
+    font-weight: bold;
+    color: var(--resume-theme-color, #111); /* Darker base */
+    margin-bottom: var(--spacing-1);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.contactInfo {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: var(--spacing-1) var(--spacing-3);
+    font-size: 0.9rem; /* Slightly larger contact info */
+    color: #555; /* Darker contact info */
+    margin-top: var(--spacing-1);
+    padding-bottom: 0; /* Remove padding below contact */
+    border-bottom: none; /* Remove border below contact */
+    line-height: 1.5;
+}
+/* Separator */
+.contactInfo > span:not(:last-child)::after {
+    content: '|';
+    color: #ccc;
+    margin-left: var(--spacing-3);
+    user-select: none;
+    -webkit-user-select: none;
+}
+.contactInfo a {
+    color: #333; /* Darker links */
+    text-decoration: none;
+}
+.contactInfo a:hover {
+    color: var(--resume-theme-color, #000);
+    text-decoration: underline;
+}
+
+
+/* --- Sections --- */
+.section {
+    margin-bottom: var(--spacing-4); /* Consistent section spacing */
+}
+
+.sectionTitle {
+    font-size: 1.15rem; /* Slightly larger section title */
+    font-weight: bold;
+    margin-bottom: var(--spacing-2); /* Tighter space below title */
+    padding-bottom: var(--spacing-1);
+    border-bottom: 1.5px solid var(--resume-theme-color, #333);
+    color: var(--resume-theme-color, #111);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.summaryText {
+    color: #444444;
+    white-space: pre-wrap;
+    text-align: justify;
+    font-size: 0.95rem;
+    margin-top: var(--spacing-2); /* Add space above summary text */
+}
+
+/* --- Items (Experience, Edu, Proj) --- */
+.item {
+    margin-bottom: var(--spacing-4); /* Space below each item block */
+}
+.item + .item {
+   margin-top: 0; /* Remove extra top margin */
+}
+
+/* Flex container for Title/Company vs Dates/Location */
+.itemHeader {
+    display: flex;
+    justify-content: space-between; /* <<< Pushes date/location right */
+    align-items: flex-start; /* Align tops */
+    flex-wrap: nowrap; /* Prevent wrapping of main info */
+    gap: var(--spacing-4); /* Gap between left/right */
+    margin-bottom: var(--spacing-1);
+}
+
+/* Left side of header */
+.itemHeader > div:first-child {
+    flex-grow: 1; /* Allow title/company to take space */
+}
+
+/* Right side of header (Dates, Location, Links) */
+.itemRightInfo {
+    flex-shrink: 0; /* Prevent shrinking */
+    text-align: right; /* Align text right */
+    font-size: 0.9rem; /* Match date size */
+    color: #555;
+}
+
+
+.itemTitle {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #222222;
+    margin-bottom: 0; /* Remove space below title if subtitle exists */
+}
+
+.itemSubtitle {
+    font-size: 0.95rem;
+    color: #444444;
+    font-weight: normal; /* Normal weight for subtitle */
+    margin-top: 2px; /* Small space above subtitle */
+    margin-bottom: 0; /* Remove space below subtitle */
+}
+.itemSubtitle i { /* Italicize tech stack */
+    font-style: italic;
+    color: #555;
+}
+
+
+.itemDates {
+    font-weight: 500;
+    font-style: italic;
+    margin-bottom: 2px; /* Space below dates if location exists */
+}
+
+.itemLocation, .itemExtra { /* Style for location or GPA */
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.itemList {
+    list-style: none;
+    padding-left: var(--spacing-4);
+    color: #444444;
+    font-size: 0.95rem; /* Slightly larger bullets */
+    margin-top: var(--spacing-2); /* Space above bullet points */
+}
+.itemList li {
+     margin-bottom: var(--spacing-1);
+     position: relative;
+     padding-left: 5px;
+}
+.itemList li::before {
+    content: '•';
+    position: absolute;
+    left: -15px;
+    top: 1px;
+    color: var(--resume-theme-color, #555);
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+ .itemDescription { /* Generic description text (like education) */
+    font-size: 0.9rem;
+    color: #555555;
+    margin-top: var(--spacing-1);
+ }
+
+
+/* --- Skills Section Formatting --- */
+.skillsCategory {
+    margin-bottom: var(--spacing-2); /* Space between categories */
+}
+.skillsCategoryTitle {
+    font-weight: bold;
+    color: #444; /* Darker category title */
+    font-size: 0.95rem;
+    display: inline; /* Keep title on same line as items */
+    margin-right: var(--spacing-2);
+}
+.skillsItemList {
+    display: inline; /* Keep items on same line */
+    color: #555;
+    font-size: 0.95rem;
+    line-height: 1.6; /* Ensure good line spacing if wraps */
+}
+
+
+/* --- Project Links Adjustments --- */
+.projectLinksContainer {
+    margin-top: 0; /* Align with title/tech */
+    display: flex;
+    flex-direction: column; /* Stack links vertically */
+    align-items: flex-end; /* Align links to the right */
+    gap: var(--spacing-1);
+}
+.projectLink {
+    color: var(--resume-theme-color, #333);
+    text-decoration: none;
+    /* Remove border/padding for cleaner link look */
+    border: none;
+    padding: 0;
+    border-radius: 0;
+    background-color: transparent !important; /* Override hover */
+    font-weight: normal; /* Normal weight */
+    font-size: 0.85rem; /* Match other right-aligned text */
+    display: inline-flex; /* Align icon and text */
+    align-items: center;
+    gap: var(--spacing-1);
+}
+.projectLink:hover {
+    color: #000; /* Simple dark hover */
+    text-decoration: underline;
+}
+/* Style the <a> tag directly if needed */
+.projectLink a {
+    color: inherit;
+    text-decoration: none;
+}
+.projectLink a:hover {
+    text-decoration: underline;
+}
+
+
+/* --- Achievements / Certifications List Formatting --- */
+/* Use itemList styling for consistency, adjust padding if needed */
+.section .itemList {
+    margin-top: var(--spacing-2);
+    padding-left: var(--spacing-4); /* Ensure consistent indent */
+}
+.section .itemList li {
+    font-size: 0.95rem; /* Match experience bullets */
+}
+.section .itemList li strong { /* Bold certification names */
+    font-weight: bold;
+    color: #333;
+}
+.section .itemList li a { /* Style links within certs/achievements */
+     color: #333;
+     text-decoration: none;
+}
+.section .itemList li a:hover {
+     color: var(--resume-theme-color, #000);
+     text-decoration: underline;
+}

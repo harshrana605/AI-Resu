@@ -1,0 +1,244 @@
+/* src/pages/Dashboard.module.css */
+.dashboardPage {
+    min-height: 100vh;
+    background-color: var(--background-main); /* Dark main bg */
+  }
+  
+  .header {
+    background-color: var(--background-card); /* Match other headers */
+    box-shadow: var(--shadow);
+    padding: var(--spacing-4);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  .headerTitle {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-color-heading);
+  }
+  
+  .userIcon {
+     width: 2rem;
+     height: 2rem;
+     background-color: var(--primary-color); /* Use primary color */
+     color: var(--text-color-on-primary);
+     border-radius: var(--border-radius-full);
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     font-weight: bold;
+     font-size: 0.875rem;
+  }
+  
+  .mainContent {
+     max-width: 1280px;
+     margin: 0 auto;
+     padding: var(--spacing-8); /* More padding */
+  }
+  
+  .pageTitle {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: var(--spacing-1);
+      color: var(--text-color-heading);
+  }
+  
+  .pageSubtitle {
+      color: var(--text-color-medium);
+      margin-bottom: var(--spacing-8); /* More space */
+  }
+  
+  .resumeGrid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* Responsive grid */
+      gap: var(--spacing-6);
+  }
+  
+  /* Card Styles */
+  .card {
+      background-color: var(--background-card); /* Dark card bg */
+      border-radius: var(--border-radius-lg);
+      box-shadow: none; /* Remove shadow, rely on bg contrast */
+      border: 1px solid var(--border-color); /* Add subtle border */
+      padding: var(--spacing-4);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      aspect-ratio: 3 / 4;
+      cursor: pointer;
+      transition: border-color 0.2s ease, background-color 0.2s ease;
+      overflow: hidden;
+      position: relative;
+  }
+  .card:hover {
+      border-color: var(--primary-color); /* Highlight border on hover */
+      background-color: var(--background-elevated); /* Slightly lighter on hover */
+  }
+  
+  .cardAddNew {
+      border-style: dashed;
+      border-color: var(--border-color-dashed); /* Lighter dashed */
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--text-color-muted); /* Muted text */
+      background-color: transparent; /* Match main bg */
+  }
+  .cardAddNew:hover {
+      border-color: var(--primary-color);
+      color: var(--primary-color);
+      background-color: var(--background-card); /* Darker on hover */
+  }
+  
+  .addIcon {
+      width: 3rem;
+      height: 3rem;
+      margin-bottom: var(--spacing-2);
+      stroke-width: 1; /* Thinner icon stroke */
+      color: var(--text-color-muted); /* Use color for stroke */
+  }
+  .cardAddNew:hover .addIcon {
+      color: var(--primary-color);
+  }
+  
+  
+  .addText {
+      font-weight: 500;
+  }
+  
+  .cardExisting {
+      /* Top border color set inline in JSX */
+      border-top-width: 4px;
+      border-top-style: solid;
+  }
+  
+  .cardImagePlaceholder {
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: var(--spacing-3);
+      color: var(--border-color); /* Darker placeholder color */
+  }
+  .cardImagePlaceholder svg {
+      width: 4rem;
+      height: 4rem;
+      opacity: 0.5;
+  }
+  
+  .cardFooter {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+  }
+  
+  .cardTitle {
+      font-weight: 500;
+      color: var(--text-color-light); /* Light text for title */
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex-grow: 1;
+      margin-right: var(--spacing-2);
+  }
+  
+  .optionsButton {
+      color: var(--text-color-muted); /* Muted color for options */
+      padding: var(--spacing-1);
+      margin: calc(-1 * var(--spacing-1));
+      background: none;
+      border: none;
+      flex-shrink: 0;
+  }
+  .optionsButton:hover {
+      color: var(--text-color-light); /* Lighter on hover */
+      background-color: var(--background-elevated); /* Subtle background */
+      border-radius: var(--border-radius-sm);
+  }
+  .optionsButton svg {
+      width: 1.25rem;
+      height: 1.25rem;
+  }
+  
+  /* Modal Styles */
+  .modalOverlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.7); /* Darker overlay */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+    padding: var(--spacing-4);
+  }
+  
+  .modalContent {
+    background-color: var(--background-card); /* Dark modal */
+    padding: var(--spacing-6);
+    border-radius: var(--border-radius-lg);
+    /* box-shadow: var(--shadow-xl); No shadow */
+    border: 1px solid var(--border-color-light); /* Lighter border */
+    width: 100%;
+    max-width: 500px;
+  }
+  
+  .modalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-6); /* More space */
+    padding-bottom: var(--spacing-3); /* Add padding */
+    border-bottom: 1px solid var(--border-color); /* Separator */
+  }
+  
+  .modalTitle {
+    font-size: 1.25rem; /* Larger title */
+    font-weight: 600;
+    color: var(--text-color-heading);
+  }
+  
+  .modalCloseButton {
+      color: var(--text-color-muted);
+      background: none;
+      border: none;
+      font-size: 1.75rem; /* Larger close icon */
+      line-height: 1;
+      padding: 0;
+  }
+  .modalCloseButton:hover {
+      color: var(--text-color-light);
+  }
+  
+  .modalLabel {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-color-medium); /* Lighter label */
+      margin-bottom: var(--spacing-2); /* More space */
+  }
+  
+  .modalInput {
+      /* Inherits global dark input styles */
+      margin-bottom: var(--spacing-6);
+  }
+  
+  .modalActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--spacing-3);
+    margin-top: var(--spacing-6);
+  }
+  
+  /* Use global button styles */
+  .modalButton { /* Base modal button if needed */ }
+  .modalButtonCancel { /* Apply global secondary */ }
+  .modalButtonCreate { /* Apply global primary */ }
+  
+  /* Responsive Adjustments (keep existing) */
+  @media (min-width: 640px) {
+      .resumeGrid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+  }

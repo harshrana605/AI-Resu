@@ -1,0 +1,96 @@
+/* src/pages/CongratsPage.module.css */
+
+.pageContainer {
+    min-height: 100vh;
+    background-color: var(--background-main); /* Dark bg */
+    padding: var(--spacing-4) var(--spacing-4) var(--spacing-8);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .header {
+     width: 100%;
+     max-width: 1024px;
+     margin-bottom: var(--spacing-6);
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+  }
+  
+  .headerTitle {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-color-heading); /* White heading */
+  }
+  
+  .dashboardLink {
+      font-size: 0.875rem;
+      color: var(--primary-color); /* Primary link color */
+      font-weight: 500;
+  }
+  .dashboardLink:hover {
+      color: var(--primary-color-hover);
+  }
+  
+  .contentBox {
+    background-color: var(--background-card); /* Dark card bg */
+    padding: var(--spacing-8); /* More padding */
+    border-radius: var(--border-radius-lg);
+    /* box-shadow: var(--shadow-lg); Remove shadow */
+    border: 1px solid var(--border-color); /* Add border */
+    text-align: center;
+    width: 100%;
+    max-width: 60rem;
+    margin-bottom: var(--spacing-8);
+  }
+  
+  .congratsHeading {
+      font-size: 1.75rem; /* Larger heading */
+      font-weight: 700;
+      color: var(--green); /* Use light green */
+      margin-bottom: var(--spacing-3);
+  }
+  
+  .congratsText {
+      color: var(--text-color-medium); /* Lighter text */
+      margin-bottom: var(--spacing-6);
+      max-width: 45rem;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.7; /* More line spacing */
+  }
+  
+  .actions {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: var(--spacing-4);
+  }
+  
+  /* Use global button styles */
+  .actionButton { /* Base adjustments if needed */
+      padding: var(--spacing-3) var(--spacing-6); /* Larger buttons */
+      font-size: 1rem;
+  }
+  .buttonDownload { /* Apply global primary */ }
+  .buttonShare { /* Apply global secondary */ }
+  
+  
+  .previewWrapper {
+      width: 100%;
+      max-width: 60rem;
+      background-color: var(--background-card); /* Match content box bg */
+      padding: var(--spacing-4);
+      border-radius: var(--border-radius-lg); /* Match rounding */
+      border: 1px solid var(--border-color); /* Add border */
+      /* box-shadow: var(--shadow-inner); Remove inner shadow */
+  }
+  
+  /* Responsive Adjustments */
+  @media (min-width: 640px) {
+      .pageContainer { padding: var(--spacing-8) var(--spacing-8) var(--spacing-12); }
+      .congratsHeading { font-size: 2rem; /* sm:text-3xl */ }
+      .actions { flex-direction: row; }
+      .previewWrapper { padding: var(--spacing-6); }
+  }

@@ -1,0 +1,469 @@
+/* src/pages/ResumeBuilder.module.css */
+
+/* --- Core Layout --- */
+.builderLayout {
+    display: flex;
+    flex-direction: column; /* Mobile first */
+    min-height: 100vh;
+    background-color: var(--background-main); /* Main dark bg */
+  }
+
+  .formPanel {
+    width: 100%;
+    padding: var(--spacing-4); /* Less padding on mobile */
+    overflow-y: auto;
+    background-color: var(--background-main); /* Form panel matches main bg */
+    order: 2; /* Form below preview on mobile */
+  }
+
+  .formContainer {
+      background-color: var(--background-card); /* Darker card background */
+      padding: var(--spacing-6);
+      border-radius: var(--border-radius-lg);
+      border: 1px solid var(--border-color); /* Add border */
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+  }
+
+/* --- Top Controls --- */
+  .topControls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--spacing-4);
+      padding-bottom: var(--spacing-4);
+      border-bottom: 1px solid var(--border-color); /* Separator */
+      flex-wrap: wrap;
+      gap: var(--spacing-4);
+  }
+  .topControlsLeft {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-4);
+  }
+
+  .iconButton { /* Base for Home, Theme, Save */
+      color: var(--text-color-medium);
+      background: none;
+      border: none;
+      padding: var(--spacing-2);
+      margin: calc(-1 * var(--spacing-2)); /* Offset padding for alignment */
+      border-radius: var(--border-radius-sm);
+      display: inline-flex; /* Use inline-flex */
+      align-items: center;
+      gap: var(--spacing-2);
+      font-weight: 500;
+      cursor: pointer;
+      transition: color 0.2s, background-color 0.2s;
+  }
+   .iconButton:hover:not(:disabled) {
+      color: var(--text-color-light);
+      background-color: var(--background-elevated); /* Hover bg */
+  }
+   .iconButton svg {
+      width: 1.25rem; height: 1.25rem;
+      flex-shrink: 0;
+  }
+   .iconButton:disabled {
+       opacity: 0.5;
+       cursor: not-allowed;
+   }
+
+
+  .stepIndicator {
+      font-size: 0.8rem;
+      color: var(--text-color-muted);
+      text-align: right;
+      flex-basis: 100%; /* Force wrap on small screens if needed */
+      order: 3; /* Put below buttons on wrap */
+  }
+
+/* --- Form Content & Navigation --- */
+  .formContent {
+      flex-grow: 1; /* Take available space */
+      margin-bottom: var(--spacing-6);
+  }
+
+  .navigationButtons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto; /* Push to bottom */
+      padding-top: var(--spacing-4);
+      border-top: 1px solid var(--border-color);
+  }
+
+  /* Navigation buttons use global styles applied via className="primary/secondary" */
+  .navButton { /* Base nav button adjustments if needed */
+       padding: var(--spacing-2) var(--spacing-4);
+       border-radius: var(--border-radius-md);
+       font-weight: 500;
+  }
+
+/* --- General Form Section Styles --- */
+  .sectionHeading {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: var(--spacing-2);
+      color: var(--text-color-heading);
+      padding-bottom: var(--spacing-2);
+      border-bottom: 1px solid var(--border-color-light);
+  }
+  .sectionDescription {
+      font-size: 0.875rem;
+      color: var(--text-color-medium);
+      margin-bottom: var(--spacing-6);
+  }
+
+  .inputGroup {
+      display: grid;
+      grid-template-columns: 1fr; /* Default to single column */
+      gap: var(--spacing-4);
+      margin-bottom: var(--spacing-4);
+  }
+  /* Class to make an element span 2 columns in the grid (on desktop) */
+  .inputGroup .span2 {
+     grid-column: span 1 / span 1; /* Default */
+  }
+
+  .formInput, .formTextarea {
+      /* Inherits from global dark input styles */
+      background-color: var(--background-input);
+      border-color: var(--border-color);
+  }
+  .inputLabel {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--text-color-medium);
+      margin-bottom: var(--spacing-1);
+      font-weight: 500;
+  }
+
+  .addRemoveButton {
+     color: var(--primary-color);
+     font-weight: 500;
+     background: none;
+     border: none;
+     padding: var(--spacing-2) 0;
+     margin-top: var(--spacing-2);
+     cursor: pointer;
+  }
+   .addRemoveButton:hover {
+     color: var(--primary-color-hover);
+     text-decoration: underline;
+  }
+
+  .removeButtonSmall {
+      position: absolute;
+      top: var(--spacing-2);
+      right: var(--spacing-2);
+      color: var(--text-color-muted);
+      font-size: 1.25rem; /* Larger click target */
+      font-weight: normal;
+      background: none;
+      border: none;
+      padding: var(--spacing-1);
+      line-height: 1;
+      border-radius: var(--border-radius-full);
+      cursor: pointer;
+      z-index: 1; /* Above other content in item */
+  }
+  .removeButtonSmall:hover {
+       color: var(--red); /* Red on hover */
+       background-color: var(--background-elevated);
+  }
+
+  .formSectionItem { /* Wrapper for multi-entry items (Exp, Edu, Proj, etc.) */
+      margin-bottom: var(--spacing-6);
+      padding: var(--spacing-4);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-md);
+      background-color: var(--background-elevated); /* Slightly lighter bg */
+      position: relative; /* For absolute remove button */
+  }
+  .formSectionItem + .formSectionItem {
+      margin-top: var(--spacing-6); /* Space between items */
+  }
+
+/* --- AI Button & Spinner --- */
+  .relativeContainer {
+      position: relative; /* Needed for absolute positioning */
+  }
+  .aiButton {
+      position: absolute;
+      top: var(--spacing-2);
+      right: var(--spacing-2);
+      background-color: var(--background-elevated);
+      color: var(--primary-color);
+      font-size: 0.75rem;
+      padding: var(--spacing-1) var(--spacing-2);
+      border-radius: var(--border-radius-full);
+      display: inline-flex;
+      align-items: center;
+      gap: var(--spacing-1);
+      border: 1px solid var(--primary-color);
+      z-index: 2; /* Above textarea */
+      cursor: pointer;
+  }
+  .aiButton:hover:not(:disabled) {
+      background-color: var(--background-input);
+      color: var(--primary-color-hover);
+      border-color: var(--primary-color-hover);
+  }
+   .aiButton:disabled {
+       opacity: 0.6;
+       cursor: not-allowed;
+   }
+  .aiButton svg {
+      width: 1rem; height: 1rem;
+  }
+  /* Modifier to position AI button inside textarea */
+  .aiButtonTextarea {
+      top: auto; /* Override top */
+      bottom: var(--spacing-2);
+  }
+
+  .spinner {
+    animation: spin 1s linear infinite;
+    height: 1em; /* Scale with font size */
+    width: 1em;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    vertical-align: middle; /* Align better with text */
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+/* --- Preview Panel Frame --- */
+  .previewPanel {
+    width: 100%;
+    background-color: var(--background-card); /* Dark frame background */
+    padding: var(--spacing-4); /* Padding around white resume */
+    overflow-y: auto;
+    order: 1; /* Preview above form on mobile */
+    height: 50vh; /* Fixed height on mobile */
+    border-bottom: 1px solid var(--border-color); /* Separator on mobile */
+  }
+
+/* --- Theme Selector Dropdown --- */
+  .themeSelectorContainer { position: relative; display: inline-block; }
+  .themeDropdown {
+      position: absolute;
+      right: 0;
+      margin-top: var(--spacing-2);
+      width: max-content;
+      min-width: 160px;
+      border-radius: var(--border-radius-md);
+      background-color: var(--background-elevated); /* Darker dropdown */
+      border: 1px solid var(--border-color-light);
+      z-index: 20; /* Ensure it's above other elements */
+      padding: var(--spacing-2);
+      box-shadow: var(--shadow-lg); /* Add shadow to dropdown */
+  }
+  .themeGrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--spacing-2); }
+  .themeSwatch {
+      width: 2rem; height: 2rem;
+      border-radius: var(--border-radius-full);
+      border: 2px solid transparent;
+      padding: 0;
+      transition: border-color 0.2s ease, transform 0.1s ease;
+      cursor: pointer;
+  }
+  .themeSwatchSelected { border-color: var(--white); transform: scale(1.1); }
+  .themeSwatch:hover { opacity: 0.8; }
+
+/* --- Summary Suggestions --- */
+  .suggestionsContainer {
+    margin-top: var(--spacing-8);
+    border-top: 1px solid var(--border-color);
+    padding-top: var(--spacing-6);
+  }
+  .suggestionsHeading {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-color-medium);
+    margin-bottom: var(--spacing-4);
+  }
+  .suggestionCard {
+    background-color: var(--background-elevated);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-4);
+    margin-bottom: var(--spacing-4);
+    cursor: pointer;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+    position: relative;
+  }
+  .suggestionCard:hover {
+    border-color: var(--primary-color);
+    background-color: var(--background-input);
+  }
+  .suggestionLevel {
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-2);
+    font-size: 0.875rem;
+  }
+  .suggestionText {
+    font-size: 0.875rem;
+    color: var(--text-color-light);
+    line-height: 1.6;
+    white-space: pre-wrap;
+  }
+
+/* --- Skills Section Specifics --- */
+  .skillsAddForm {
+      /* Inherits inputGroup styles */
+       margin-bottom: var(--spacing-6); /* Space below add form */
+  }
+  .skillsListContainer {
+      margin-top: var(--spacing-6);
+      padding: var(--spacing-4);
+      background-color: var(--background-elevated);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-md);
+  }
+  .skillsListHeading {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-color-medium);
+      margin-bottom: var(--spacing-3);
+      padding-bottom: var(--spacing-2);
+      border-bottom: 1px solid var(--border-color-light);
+  }
+  .skillsListItem {
+      color: var(--text-color-light);
+      margin-bottom: var(--spacing-1);
+      padding: var(--spacing-2) 0; /* More padding */
+      border-bottom: 1px dashed var(--border-color-dashed);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+  }
+  .skillsListItem:last-child {
+      border-bottom: none;
+  }
+  /* Container for the AI button in skills section */
+  .skillsAiButtonContainer {
+       margin-top: var(--spacing-4);
+       text-align: right; /* Align AI button right */
+  }
+  /* Ensure AI button in skills is not absolutely positioned */
+  .skillsAiButtonContainer .aiButton {
+      position: static;
+      display: inline-flex; /* Behave like a button */
+      /* Reuse existing .aiButton styles for appearance */
+  }
+
+
+/* --- Review Section --- */
+  .reviewText {
+      color: var(--text-color-medium);
+      margin-bottom: var(--spacing-6);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      background-color: var(--background-elevated);
+      padding: var(--spacing-4);
+      border-radius: var(--border-radius-md);
+      border: 1px solid var(--border-color);
+  }
+  .reviewButton {
+      /* Inherits primary button styling via className in JSX */
+      width: 100%; /* Make button full width */
+      padding: var(--spacing-3); /* Larger padding */
+      font-size: 1rem;
+      margin-top: var(--spacing-4); /* Space above button */
+      display: inline-flex; /* Align spinner */
+      justify-content: center; /* Center content */
+      align-items: center;
+  }
+  .reviewButton .spinner {
+       margin-right: var(--spacing-2);
+       height: 1.2em;
+       width: 1.2em;
+       border-width: 3px;
+  }
+
+/* --- Error Message --- */
+  .errorMessage {
+      color: var(--red);
+      font-size: 0.875rem;
+      margin-top: var(--spacing-4);
+      background-color: rgba(239, 68, 68, 0.1); /* Transparent red bg */
+      border: 1px solid var(--red);
+      padding: var(--spacing-3);
+      border-radius: var(--border-radius-md);
+  }
+
+/* --- Responsive Adjustments --- */
+@media (min-width: 768px) {
+    .builderLayout { flex-direction: row; height: 100vh; }
+    .formPanel { width: 50%; order: 1; padding: var(--spacing-8); border-right: 1px solid var(--border-color); }
+    .previewPanel { width: 50%; order: 2; padding: var(--spacing-8); height: 100vh; border-bottom: none; background-color: var(--background-elevated); /* Darker frame on desktop */ }
+    .inputGroup { grid-template-columns: 1fr 1fr; }
+    .inputGroup .span2 { grid-column: span 2 / span 2; } /* Make span2 work on desktop */
+    .stepIndicator { flex-basis: auto; order: 0; /* Reset order for desktop */ }
+    /* Adjust skills add form layout on desktop */
+    .skillsAddForm { grid-template-columns: 1fr auto; /* Input takes space, button fits content */ }
+    .skillsAddForm .span2 { grid-column: span 1 / span 1; } /* Reset span for input */
+}
+
+/* --- Utility class for borderless input (used in Skills list) --- */
+.inputBorderless {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    border-radius: 0 !important;
+}
+.inputBorderless:focus {
+    box-shadow: none !important; /* Remove focus ring too */
+}
+
+
+/* src/pages/ResumeBuilder.module.css */
+
+/* --- Keep ALL existing styles from the previous correct version --- */
+/* ... */
+/* ... All previous styles ... */
+/* ... */
+
+
+/* --- *** NEW STYLE for Portal Dropdown *** --- */
+/* Style for the dropdown when rendered via portal */
+.themeDropdownPortal {
+    /* Position is set via inline styles now (position: absolute) */
+    width: max-content;
+    min-width: 160px; /* Same min-width */
+    border-radius: var(--border-radius-md);
+    background-color: var(--background-card); /* Same background */
+    border: 1px solid var(--border-color-light); /* Same border */
+    z-index: 100; /* Ensure high z-index */
+    padding: var(--spacing-3); /* Same padding */
+    box-shadow: var(--shadow-lg); /* Same shadow */
+    /* Removed margin-top as position is calculated */
+}
+
+/* Keep .themeGrid and .themeSwatch styles as they apply inside the dropdown */
+.themeGrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--spacing-2); }
+.themeSwatch {
+    width: 2.25rem; height: 2.25rem;
+    border-radius: var(--border-radius-full);
+    border: 3px solid transparent;
+    padding: 0;
+    transition: border-color 0.2s ease, transform 0.1s ease;
+    cursor: pointer;
+    box-shadow: var(--shadow-inner);
+}
+.themeSwatchSelected {
+    border-color: var(--white);
+    transform: scale(1.1);
+    box-shadow: 0 0 0 2px var(--primary-color);
+}
+.themeSwatch:hover { opacity: 0.9; transform: scale(1.05); }
+
+/* --- Keep ALL other existing styles below --- */
+/* ... */

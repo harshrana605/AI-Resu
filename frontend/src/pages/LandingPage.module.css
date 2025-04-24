@@ -1,0 +1,390 @@
+/* src/pages/LandingPage.module.css */
+
+.pageContainer {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--background-main); /* Dark background */
+  color: var(--text-color-light);
+}
+
+/* --- New Navbar Styles --- */
+.navbar {
+  background-color: var(--background-card); /* Slightly different bg */
+  padding: var(--spacing-3) var(--spacing-6);
+  border-bottom: 1px solid var(--border-color);
+  position: sticky; /* Make navbar sticky */
+  top: 0;
+  z-index: 50; /* Ensure it's above other content */
+  width: 100%;
+}
+
+.navContainer {
+  max-width: 1280px; /* Limit width */
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navLogo {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--primary-color); /* Use primary color */
+  text-decoration: none;
+}
+.navLogo:hover {
+  opacity: 0.9;
+  text-decoration: none;
+}
+
+.navLinks {
+  display: none; /* Hide placeholder links on small screens */
+  gap: var(--spacing-6);
+  align-items: center;
+}
+
+.navLink {
+  color: var(--text-color-medium);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: color 0.2s ease;
+}
+.navLink:hover {
+  color: var(--text-color-light);
+  text-decoration: none;
+}
+
+.navButton {
+  /* Uses global button styles via className="primary" */
+  padding: var(--spacing-2) var(--spacing-4); /* Adjust padding */
+  font-size: 0.9rem;
+}
+
+/* Show nav links on larger screens */
+@media (min-width: 768px) {
+  .navLinks {
+      display: flex;
+  }
+}
+
+
+/* --- Hero Section Styles --- */
+.heroSection {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--spacing-12) var(--spacing-4) var(--spacing-16); /* More vertical padding */
+  /* Optional subtle gradient */
+  background: linear-gradient(180deg, var(--background-main) 60%, #1a202c 100%);
+  position: relative; /* For potential absolute elements later */
+  overflow: hidden; /* Hide overflow for effects */
+}
+
+/* Simple fade-in animation for hero content */
+.heroSection > * {
+  animation: fadeIn 0.8s ease-out forwards;
+  opacity: 0;
+}
+.heroSection h1 { animation-delay: 0.1s; }
+.heroSection p { animation-delay: 0.2s; }
+.heroSection .badgeContainer { animation-delay: 0s; }
+.heroSection .buttonGroup { animation-delay: 0.4s; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+.badgeContainer {
+  margin-bottom: var(--spacing-4);
+  font-size: 0.875rem;
+  color: var(--text-color-medium);
+}
+
+.badge {
+  display: inline-block;
+  background-color: var(--background-elevated);
+  color: var(--primary-color);
+  font-weight: 600;
+  padding: var(--spacing-1) var(--spacing-3);
+  border-radius: var(--border-radius-full);
+  margin-right: var(--spacing-2);
+  border: 1px solid var(--border-color);
+}
+
+.heroHeading {
+  font-size: 2.8rem; /* Larger heading */
+  font-weight: 800; /* Bolder */
+  margin-bottom: var(--spacing-3);
+  line-height: 1.2;
+  color: var(--text-color-heading);
+  max-width: 30ch; /* Limit line length */
+}
+.heroHeading span {
+  color: var(--primary-color); /* Accent color */
+}
+
+.heroSubtext {
+  font-size: 1.1rem; /* Slightly smaller */
+  color: var(--text-color-medium);
+  margin-bottom: var(--spacing-8);
+  max-width: 55ch; /* Limit line length */
+  line-height: 1.7;
+}
+
+.buttonGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  align-items: center;
+}
+
+/* Buttons use global styles via className="primary/secondary" */
+.button {
+  padding: var(--spacing-3) var(--spacing-6); /* Larger buttons */
+  font-size: 1rem;
+  min-width: 180px; /* Minimum button width */
+}
+.button span[aria-hidden="true"] { /* Style arrow */
+  margin-left: var(--spacing-2);
+  transition: transform 0.2s ease;
+  display: inline-block; /* Ensure transform works */
+}
+.button:hover span[aria-hidden="true"] {
+  transform: translateX(4px);
+}
+.buttonIcon {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-right: var(--spacing-2); /* Space between icon and text */
+}
+
+@media (min-width: 640px) {
+  .buttonGroup { flex-direction: row; }
+  .heroHeading { font-size: 3.5rem; }
+  .heroSubtext { font-size: 1.15rem; }
+}
+@media (min-width: 1024px) {
+  .heroHeading { font-size: 4.2rem; }
+  .heroSubtext { font-size: 1.25rem; }
+}
+
+
+/* --- Section Container (reusable) --- */
+.sectionContainer {
+  max-width: 1100px; /* Consistent max width */
+  margin: 0 auto;
+  padding: 0 var(--spacing-4);
+}
+
+
+/* --- Featured Section --- */
+.featuredSection {
+  padding: var(--spacing-8) 0; /* Reduced padding */
+  background-color: var(--background-card);
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.featuredHeading {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.15em; /* Wider */
+  margin-bottom: var(--spacing-6);
+  text-align: center;
+}
+
+.featuredLogos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-8);
+  flex-wrap: wrap;
+}
+
+.featuredLogo {
+  height: 1.8rem; /* Slightly smaller logos */
+  opacity: 0.7;
+  filter: brightness(1.2) grayscale(50%); /* Adjust filter */
+  transition: opacity 0.2s ease, filter 0.2s ease;
+}
+.featuredLogo:hover {
+  opacity: 1;
+  filter: none;
+}
+@media (min-width: 640px) {
+  .featuredLogos { gap: var(--spacing-12); }
+  .featuredLogo { height: 2.2rem; }
+}
+
+
+/* --- How it Works Section --- */
+.howItWorksSection {
+ padding: var(--spacing-16) 0;
+ background-color: var(--background-main); /* Match hero bg */
+ text-align: center;
+}
+
+.howItWorksHeading {
+  font-size: 2.2rem; /* Larger */
+  font-weight: 700;
+  margin-bottom: var(--spacing-3);
+  color: var(--text-color-heading);
+}
+
+.howItWorksSubtext {
+  font-size: 1.1rem;
+  color: var(--text-color-medium);
+  max-width: 50ch;
+  margin: 0 auto var(--spacing-12); /* More space below */
+}
+
+/* Grid for steps */
+.stepsGrid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr); /* Single column on mobile */
+  gap: var(--spacing-8);
+  max-width: 900px; /* Limit width of grid */
+  margin: 0 auto;
+}
+
+.step {
+  background-color: var(--background-card);
+  padding: var(--spacing-6);
+  border-radius: var(--border-radius-lg);
+  border: 1px solid var(--border-color);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.step:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.stepNumber {
+  background-color: var(--primary-color);
+  color: var(--text-color-on-primary);
+  width: 40px;
+  height: 40px;
+  border-radius: var(--border-radius-full);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-bottom: var(--spacing-4);
+}
+
+.stepTitle {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-color-light);
+  margin-bottom: var(--spacing-2);
+}
+
+.stepDescription {
+  font-size: 0.95rem;
+  color: var(--text-color-medium);
+  line-height: 1.6;
+}
+
+@media (min-width: 768px) {
+  .stepsGrid {
+      grid-template-columns: repeat(3, 1fr); /* Three columns on desktop */
+      gap: var(--spacing-6);
+  }
+  .howItWorksHeading { font-size: 2.5rem; }
+}
+
+
+/* --- Footer --- */
+.footer {
+ background-color: var(--background-card);
+ color: var(--text-color-medium);
+ text-align: center;
+ padding: var(--spacing-6) var(--spacing-4); /* More padding */
+ margin-top: auto; /* Push footer down */
+ border-top: 1px solid var(--border-color);
+ font-size: 0.875rem;
+}
+
+
+/* --- Video Modal Styles --- */
+.modalOverlay {
+position: fixed;
+inset: 0; /* Cover entire viewport */
+background-color: rgba(0, 0, 0, 0.8); /* Darker overlay */
+display: flex;
+align-items: center;
+justify-content: center;
+z-index: 1000; /* High z-index */
+padding: var(--spacing-4);
+animation: fadeIn 0.3s ease-out forwards; /* Fade in overlay */
+}
+
+.modalContent {
+background-color: var(--background-main); /* Use main bg for modal */
+padding: var(--spacing-2); /* Minimal padding around video */
+border-radius: var(--border-radius-lg);
+position: relative;
+max-width: 900px; /* Max width for video */
+width: 90%; /* Responsive width */
+box-shadow: var(--shadow-xl);
+/* Add animation for modal appearance */
+animation: scaleIn 0.3s ease-out forwards;
+transform-origin: center center;
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+
+.modalCloseButton {
+position: absolute;
+top: calc(-1 * var(--spacing-6)); /* Position outside top right */
+right: calc(-1 * var(--spacing-6));
+color: var(--white);
+background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+border: none;
+font-size: 1.8rem;
+line-height: 1;
+padding: var(--spacing-1) var(--spacing-2);
+border-radius: var(--border-radius-full);
+cursor: pointer;
+transition: background-color 0.2s;
+width: 40px;
+height: 40px;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.modalCloseButton:hover {
+background-color: rgba(255, 255, 255, 0.3);
+}
+
+.videoWrapper {
+position: relative;
+padding-bottom: 56.25%; /* 16:9 aspect ratio */
+height: 0;
+overflow: hidden;
+width: 100%;
+border-radius: calc(var(--border-radius-lg) - var(--spacing-2)); /* Match content rounding */
+}
+
+.videoWrapper iframe {
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+border: 0; /* Remove iframe border */
+}
