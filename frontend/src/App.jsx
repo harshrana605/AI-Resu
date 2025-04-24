@@ -5,7 +5,7 @@ import Dashboard from './pages/Dashboard';
 import ResumeBuilder from './pages/ResumeBuilder';
 import CongratsPage from './pages/CongratsPage';
 import { ResumeProvider } from './contexts/ResumeContext';
-import './index.css'; // Import global styles
+import './index.css'; 
 
 function App() {
   return (

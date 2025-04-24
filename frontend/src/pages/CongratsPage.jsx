@@ -10,17 +10,12 @@ function CongratsPage() {
     const { resumeData, themeColor } = useResume();
 
     const handleDownload = () => {
-        // --- Placeholder PDF Download Logic ---
         alert('PDF Download functionality not implemented.');
-        // Option 1: Use a library like jsPDF + html2canvas client-side
-        // Option 2: Send data to a backend endpoint that generates and returns a PDF
         console.log("Data to potentially include in PDF:", resumeData);
     };
 
     const handleShare = () => {
-        // --- Placeholder Share Logic ---
-        // Requires backend to store and serve resumes at unique URLs
-        const shareUrl = `${window.location.origin}/view/${resumeId}`; // Hypothetical URL
+        const shareUrl = `${window.location.origin}/view/${resumeId}`;
         navigator.clipboard.writeText(shareUrl)
             .then(() => alert(`Share link copied (Placeholder): ${shareUrl}`))
             .catch(err => {
@@ -31,18 +26,16 @@ function CongratsPage() {
 
     return (
         <div className={styles.pageContainer}>
-            {/* Header */}
             <header className={styles.header}>
                 <h1 className={styles.headerTitle}>Your Resume</h1>
-                 <button
-                     onClick={() => navigate('/dashboard')}
-                     className={styles.dashboardLink}
-                 >
-                     Back to Dashboard
-                 </button>
+                <button
+                    onClick={() => navigate('/dashboard')}
+                    className={styles.dashboardLink}
+                >
+                    Back to Dashboard
+                </button>
             </header>
 
-            {/* Content Box */}
             <div className={styles.contentBox}>
                 <h2 className={styles.congratsHeading}>Congrats! Your Resume is ready!</h2>
                 <p className={styles.congratsText}>
@@ -64,7 +57,6 @@ function CongratsPage() {
                 </div>
             </div>
 
-            {/* Final Preview */}
             <div className={styles.previewWrapper} style={{ '--resume-theme-color': themeColor }}>
                 <ResumePreview resumeData={resumeData} />
             </div>

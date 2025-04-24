@@ -4,13 +4,9 @@ import { useResume } from '../contexts/ResumeContext';
 import ResumePreview from '../components/ResumePreview'; // Adjust path if needed
 import styles from './ResumeBuilder.module.css';
 
-// --- Constants ---
+
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || ''; // Get from .env
 
-// --- Form Section Components ---
-// [PersonalDetailsForm, SummaryForm, ExperienceForm, EducationForm, ProjectsForm, SkillsForm, CertificationsForm, AchievementsForm, ReviewForm]
-// (Keep these components exactly as they were in the previous correct version)
-// --- PersonalDetailsForm ---
 function PersonalDetailsForm() {
     const { resumeData, updateNestedData } = useResume();
     const personal = resumeData?.personal || {};
@@ -661,8 +657,7 @@ function ResumeBuilder() {
     const [currentStepIndex, setCurrentStepIndex] = useState(0);
     const [isLoading, setIsLoading] = useState(true);
 
-    // --- *** SETUP useEffect Hook *** ---
-    // This effect should run ONLY when the component mounts or resumeId changes.
+    
     useEffect(() => {
         let isMounted = true;
         console.log(">>> ResumeBuilder SETUP useEffect - START. resumeId:", resumeId);
@@ -690,7 +685,7 @@ function ResumeBuilder() {
             } finally {
                 if (isMounted) {
                     console.log(">>> ResumeBuilder SETUP useEffect - Setting step index to 0.");
-                    // Reset step to 0 only during this setup phase
+                    
                     setCurrentStepIndex(0);
                     setIsLoading(false);
                     console.log(">>> ResumeBuilder SETUP useEffect - END. isLoading: false");
@@ -702,8 +697,8 @@ function ResumeBuilder() {
             isMounted = false;
             console.log(">>> ResumeBuilder SETUP useEffect - CLEANUP.");
         };
-        // This dependency array is critical. It prevents the effect from re-running on resumeData changes.
-    }, [resumeId, navigate, loadResume, resetResume]); // <<<< KEEP THIS DEPENDENCY ARRAY
+       
+    }, [resumeId, navigate, loadResume, resetResume]); 
 
     // Function to scroll the form panel to the top
     const scrollToTop = () => {
@@ -776,11 +771,11 @@ function ResumeBuilder() {
   // Calculate progress percentage
   const progressPercent = isLoading ? 0 : ((currentStepIndex + 1) / steps.length) * 100;
 
-  // Icons for Buttons
+  
    const DashboardIcon = () => <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="1em" height="1em"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>;
    const SaveIcon = () => <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="1em" height="1em"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg>;
 
-  // Main JSX Structure
+  
   return (
     <div className={styles.builderLayout}>
       {/* Form Panel (Scrollable) */}
@@ -818,8 +813,8 @@ function ResumeBuilder() {
               :
               <ResumePreview resumeData={resumeData} />
           }
-      </div> {/* End Preview Panel */}
-    </div> // End Builder Layout
+      </div> 
+    </div> 
   );
 }
 
